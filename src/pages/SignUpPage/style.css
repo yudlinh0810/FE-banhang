@@ -1,0 +1,19 @@
+.mstyl {
+  color: rgb(11, 116, 229);
+  display: block;
+  font-family: Inter, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+}
+.sudmn {
+  color: rgb(11, 116, 229);
+  display: inline;
+  font-family: Inter, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tag_p {
+  font-size: 15px;
+  font-weight: 500;
+}

@@ -1,0 +1,9 @@
+.inputs {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  outline: none;
+}
+.inputs:focus {
+  background-color: rgb(233, 240, 254);
+}
