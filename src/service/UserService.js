@@ -19,7 +19,7 @@ export const signUpUser = async (data) => {
 
 export const getDetailsUser = async (id, access_token) => {
   console.log('env:', api);
-  const res = await axiosJWT.get(`http://localhost:3001/api/user/get-details/${id}`, {
+  const res = await axios.get(`http://localhost:3001/api/user/get-details/${id}`, {
     headers: {
       token: `Bearer ${access_token}`,
     },

@@ -46,7 +46,7 @@ export const HeaderComponent = () => {
               <UserOutlined style={{ fontSize: '30px' }} />
             </div>
             {user?.name ? (
-              <div>{user.name}</div>
+              <div>{user?.name}</div>
             ) : (
               <div onClick={handleNavigateLogin} style={{ cursor: 'pointer' }}>
                 <WrapperTextHeaderSmall>Login/Register</WrapperTextHeaderSmall>

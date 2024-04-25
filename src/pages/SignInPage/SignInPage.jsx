@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import * as UserService from '../../service/UserService';
 import { useMutationHooks } from '../../hooks/UseMutationHook';
 import Loading from '../../components/LoadingComponent/Loading';
-import { jwtDecode } from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../redux/slices/userSlice';
 
@@ -28,16 +28,16 @@ export const SignInPage = () => {
       navigate('/');
       localStorage.setItem('access_token', JSON.stringify(data?.access_token));
       if (data?.access_token) {
-        const decoded = jwtDecode(data?.access_token);
+        const decoded = jwt_decode(data?.access_token);
         if (decoded?.id) {
           handleGetDetailUser(decoded?.id, data?.access_token);
         }
       }
     }
   }, [isSuccess]);
-  const handleGetDetailUser = async (id, access_token) => {
-    const res = await UserService.getDetailsUser(id, access_token);
-    dispatch(updateUser({ ...res?.data, access_token: access_token }));
+  const handleGetDetailUser = async (id, token) => {
+    const res = await UserService.getDetailsUser(id, token);
+    dispatch(updateUser({ ...res?.data, access_token: token }));
   };
   //
   const handleOnChangeEmail = (value) => {
