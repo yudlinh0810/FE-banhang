@@ -27,8 +27,8 @@ function App() {
     console.log('storageData', storageData);
   });
 
-  const handleGetDetailUser = (id, token) => {
-    const res = UserService.getDetailsUser(id, token);
+  const handleGetDetailUser = async (id, token) => {
+    const res = await UserService.getDetailsUser(id, token);
     dispatch(updateUser({ ...res?.data, access_token: token }));
   };
   return (
