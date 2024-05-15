@@ -1,25 +1,27 @@
-import axios from 'axios';
+import axios from './CustomizeAxios';
 
-export const axiosJWT = axios.create();
-const api = process.env.REACT_APP_API_URL;
+export const axiosJwt = axios.create();
 
 export const loginUser = async (data) => {
-  console.log('test:', api);
-  // const res = await axios.post(`${process.env.REACT_APP_API_URL}/user/sign-in`, data);
-  const res = await axios.post(`http://localhost:3001/api/user/sign-in`, data);
-
-  return res.data;
+  return axios.post(`user/sign-in`, data);
+  // const setCookieHeader = res.headers['set-cookie'];
+  // if (setCookieHeader) {
+  //   const cookies = {};
+  //   setCookieHeader.forEach((cookieString) => {
+  //     const cookieParts = cookieString.split(';');
+  //     const [name, value] = cookieParts[0].split('=');
+  //     cookies[name.trim()] = value.trim();
+  //   });
+  //   localStorage.setItem('myCookies', JSON.stringify(cookies));
+  // }
 };
 export const signUpUser = async (data) => {
-  console.log('env:', api);
-  // const res = await axios.post(`${process.env.REACT_APP_API_URL}/user/sign-up`, data);
-  const res = await axios.post(`http://localhost:3001/api/user/sign-up`, data);
+  const res = await axios.post(`/user/sign-up`, data);
   return res.data;
 };
 
 export const getDetailsUser = async (id, access_token) => {
-  console.log('env:', api);
-  const res = await axios.get(`http://localhost:3001/api/user/get-details/${id}`, {
+  const res = await axiosJwt.get(`/user/get-details/${id}`, {
     headers: {
       token: `Bearer ${access_token}`,
     },
@@ -27,10 +29,18 @@ export const getDetailsUser = async (id, access_token) => {
   return res.data;
 };
 
-export const refreshToken = async () => {
-  console.log('env:', api);
-  const res = await axios.post(`http://localhost:3001/api/user/refresh-token`, {
-    withCredentials: true,
-  });
+export const refreshToken = async (refreshToken) => {
+  const res = await axios.post(
+    `/user/refresh-token`,
+    { withCredentials: true },
+    {
+      headers: {
+        token: `Bearer ${refreshToken}`,
+      },
+    }
+  );
   return res.data;
+};
+export const logoutUser = async () => {
+  return axios.get(`/user/log-out`);
 };

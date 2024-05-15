@@ -12,9 +12,9 @@ const CardComponent = () => {
   return (
     <WrapperCardStyle
       hoverable
-      headStyle={{ width: '180px', height: '180px' }}
-      style={{ width: 240 }}
-      bodyStyle={{ padding: '12px' }}
+      styles={{ header: { width: '180px', height: '180px' } }}
+      style={{ width: '240px', padding: '12px' }}
+      // styles={{body:{ padding: '12px' }}}
       cover={<img alt='example' src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png' />}
     >
       <StyleNameProduct>IP</StyleNameProduct>

@@ -7,30 +7,48 @@ import * as UserService from './service/UserService';
 import { useDispatch } from 'react-redux';
 import { updateUser } from './redux/slices/userSlice';
 import jwt_decode from 'jwt-decode';
+// import axios from 'axios';
 
-function App() {
+function App(props) {
   const dispatch = useDispatch();
   useEffect(() => {
+    const { decoded, storageData } = handleDecoded();
+    if (decoded?.id) {
+      handleGetDetailUser(decoded?.id, storageData);
+    }
+  }, []);
+
+  const handleDecoded = () => {
     let storageData = localStorage.getItem('access_token');
-    console.log('storageData1', storageData, isJsonString(storageData));
+    let decoded = {};
     if (storageData && isJsonString(storageData)) {
       storageData = JSON.parse(storageData);
-      const decoded = jwt_decode(storageData);
-      console.log('decode', decoded);
-      const id = decoded?.id;
-      console.log('id', id);
-      if (id) {
-        console.log('id, token', id, storageData);
-        handleGetDetailUser(decoded?.id, storageData);
-      }
+      decoded = jwt_decode(storageData);
     }
-    console.log('storageData', storageData);
-  });
+    return { decoded, storageData };
+  };
+  //
+  UserService.axiosJwt.interceptors.request.use(
+    async (config) => {
+      const currentTime = new Date();
+      const { decoded } = handleDecoded();
+      if (decoded?.exp < currentTime.getTime() / 1000) {
+        const data = await UserService.refreshToken();
+        config.headers['token'] = `Bearer ${data?.access_token}`;
+      }
+      return config;
+    },
+    function (error) {
+      return Promise.reject(error);
+    }
+  );
+  //
 
   const handleGetDetailUser = async (id, token) => {
     const res = await UserService.getDetailsUser(id, token);
     dispatch(updateUser({ ...res?.data, access_token: token }));
   };
+
   return (
     <div>
       <Router>
