@@ -1,5 +1,5 @@
-import React from 'react';
-import { Badge, Col } from 'antd';
+import React, { useState } from 'react';
+import { Badge, Col, Popover } from 'antd';
 import {
   WrapperHeader,
   WrapperTextHeader,
@@ -9,14 +9,33 @@ import {
 import { UserOutlined, CaretDownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import ButtonInputSearch from '../ButtonInputSearch/ButtonInputSearch';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import './style.css';
+import { logoutUser } from '../../service/UserService';
+import { resetUser } from '../../redux/slices/userSlice';
+import Loading from '../LoadingComponent/Loading';
 export const HeaderComponent = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleNavigateLogin = () => {
     navigate('/sign-in');
   };
   const user = useSelector((state) => state.user);
   console.log('user', user);
+  const handleLogout = async () => {
+    setLoading(true);
+    localStorage.clear();
+    await logoutUser();
+    dispatch(resetUser());
+    setLoading(false);
+  };
+  const content = (
+    <div>
+      <p>Thông tin tài khoản</p>
+      <p>Đổi mật khẩu</p>
+    </div>
+  );
   return (
     <div
       style={{
@@ -41,22 +60,36 @@ export const HeaderComponent = () => {
           />
         </Col>
         <Col span={6} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
-          <WrapperHeaderAccount>
-            <div>
-              <UserOutlined style={{ fontSize: '30px' }} />
-            </div>
-            {user?.name ? (
-              <div>{user?.name}</div>
-            ) : (
-              <div onClick={handleNavigateLogin} style={{ cursor: 'pointer' }}>
-                <WrapperTextHeaderSmall>Login/Register</WrapperTextHeaderSmall>
-                <div>
-                  <WrapperTextHeaderSmall>Account</WrapperTextHeaderSmall>
-                  <CaretDownOutlined style={{ position: 'relative', top: '2px', left: '2px' }} />
-                </div>
+          <Loading isPending={loading}>
+            <WrapperHeaderAccount>
+              <div>
+                <UserOutlined style={{ fontSize: '30px' }} />
               </div>
-            )}
-          </WrapperHeaderAccount>
+              {user?.name ? (
+                <>
+                  {/* <div className='dropdown'>
+                  <p className='username'>{user?.name}</p>
+                  <div className='dropdown-content'>
+                    <p className='content'>Thông tin chi tiết</p>
+                    <p className='content'>Đổi mật khẩu</p>
+                    <p className='content'>function 3</p>
+                  </div>
+                </div> */}
+                  <Popover content={content} trigger='hover'>
+                    <div className='username'>{user?.name}</div>
+                  </Popover>
+                </>
+              ) : (
+                <div onClick={handleNavigateLogin} style={{ cursor: 'pointer' }}>
+                  <WrapperTextHeaderSmall>Login/Register</WrapperTextHeaderSmall>
+                  <div>
+                    <WrapperTextHeaderSmall>Account</WrapperTextHeaderSmall>
+                    <CaretDownOutlined style={{ position: 'relative', top: '2px', left: '2px' }} />
+                  </div>
+                </div>
+              )}
+            </WrapperHeaderAccount>
+          </Loading>
           <div>
             <Badge count={7} style={{ fontSize: '10px', position: 'absolute', top: '10px' }}>
               <ShoppingCartOutlined
@@ -74,6 +107,13 @@ export const HeaderComponent = () => {
               Cart
             </WrapperTextHeaderSmall>
           </div>
+          {user?.name ? (
+            <div id='logout' onClick={handleLogout}>
+              Logout
+            </div>
+          ) : (
+            <div></div>
+          )}
         </Col>
       </WrapperHeader>
     </div>

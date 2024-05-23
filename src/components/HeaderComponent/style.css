@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.username {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: -123px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+#logout {
+  background-color: white;
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content .content {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}

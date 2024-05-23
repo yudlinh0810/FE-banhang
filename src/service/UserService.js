@@ -1,9 +1,10 @@
-import axios from './CustomizeAxios';
+import axios from 'axios';
 
 export const axiosJwt = axios.create();
 
 export const loginUser = async (data) => {
-  return axios.post(`user/sign-in`, data);
+  const res = await axios.post(`http://localhost:3001/api/user/sign-in`, data);
+  // console.log('res-cookie', res.headers['set-cookie']);
   // const setCookieHeader = res.headers['set-cookie'];
   // if (setCookieHeader) {
   //   const cookies = {};
@@ -14,14 +15,15 @@ export const loginUser = async (data) => {
   //   });
   //   localStorage.setItem('myCookies', JSON.stringify(cookies));
   // }
+  return res.data;
 };
 export const signUpUser = async (data) => {
-  const res = await axios.post(`/user/sign-up`, data);
+  const res = await axios.post(`http://localhost:3001/api/user/sign-up`, data);
   return res.data;
 };
 
 export const getDetailsUser = async (id, access_token) => {
-  const res = await axiosJwt.get(`/user/get-details/${id}`, {
+  const res = await axiosJwt.get(`http://localhost:3001/api/user/get-details/${id}`, {
     headers: {
       token: `Bearer ${access_token}`,
     },
@@ -31,7 +33,7 @@ export const getDetailsUser = async (id, access_token) => {
 
 export const refreshToken = async (refreshToken) => {
   const res = await axios.post(
-    `/user/refresh-token`,
+    `http://localhost:3001/api/user/refresh-token`,
     { withCredentials: true },
     {
       headers: {
@@ -42,5 +44,5 @@ export const refreshToken = async (refreshToken) => {
   return res.data;
 };
 export const logoutUser = async () => {
-  return axios.get(`/user/log-out`);
+  return axios.post(`http://localhost:3001/api/user/log-out`);
 };

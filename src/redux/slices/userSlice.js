@@ -5,6 +5,7 @@ const initialState = {
   email: '',
   name: '',
   access_token: '',
+  // isLoading: false,
 };
 
 export const userSlide = createSlice({
