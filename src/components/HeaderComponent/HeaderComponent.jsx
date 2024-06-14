@@ -30,10 +30,21 @@ export const HeaderComponent = () => {
     dispatch(resetUser());
     setLoading(false);
   };
+  const handleProfileUser = () => {
+    navigate('/profile-user');
+  };
   const content = (
     <div>
-      <p>Thông tin tài khoản</p>
-      <p>Đổi mật khẩu</p>
+      <p className='cursor' onClick={handleProfileUser}>
+        Thông tin tài khoản
+      </p>
+      {user.isAdmin ? (
+        <p className='cursor' onClick={() => navigate('/admin')}>
+          Quản lý hệ thống
+        </p>
+      ) : null}
+
+      <p className='cursor'>Đổi mật khẩu</p>
     </div>
   );
   return (

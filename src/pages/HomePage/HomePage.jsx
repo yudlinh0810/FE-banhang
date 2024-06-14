@@ -6,8 +6,21 @@ import slider1 from '../../assets/images/slider_tiki_1.webp';
 import slider2 from '../../assets/images/slider_tiki_1.webp';
 import slider3 from '../../assets/images/slider_tiki_1.webp';
 import CardComponent from '../../components/CardComponent/CardComponent';
+import { useQuery } from '@tanstack/react-query';
+import * as ProductService from '../../service/ProductService';
 export const HomePage = () => {
   const arrProduct = ['áo thun', 'áo sơ mi', 'áo genz'];
+  const fetchProductAll = async () => {
+    const res = await ProductService.getAllProduct();
+    return res;
+  };
+  const { isPending, data: products } = useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProductAll,
+    retry: 3,
+    retryDelay: 1500,
+  });
+  console.log('data:', products);
   return (
     <>
       <div style={{ width: '1270px', margin: '0 auto' }}>
@@ -22,16 +35,22 @@ export const HomePage = () => {
           <SliderComponent arrImages={[slider1, slider2, slider3]} />
           {/* <NavbarComponent /> */}
           <WrapperProducts>
-            <CardComponent />
-            <CardComponent />
-            <CardComponent />
-            <CardComponent />
-            <CardComponent />
-            <CardComponent />
-            <CardComponent />
-            <CardComponent />
-            <CardComponent />
-            <CardComponent />
+            {products?.data?.map((product) => {
+              return (
+                <CardComponent
+                  key={product._id}
+                  countInStock={product.countInStock}
+                  description={product.description}
+                  name={product.name}
+                  price={product.price}
+                  rating={product.rating}
+                  type={product.type}
+                  image={product.image}
+                  sell={product.sell}
+                  discount={product.discount}
+                />
+              );
+            })}
           </WrapperProducts>
           <div
             style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '10px' }}

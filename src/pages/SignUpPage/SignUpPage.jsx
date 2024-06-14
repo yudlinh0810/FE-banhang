@@ -20,6 +20,7 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
   // const handleOnChangeName = (value) => {
   //   setName(value);
   // };
@@ -29,6 +30,9 @@ const SignUpPage = () => {
 
   const handleOnChangeEmail = (value) => {
     setEmail(value);
+  };
+  const handleOnChangeName = (value) => {
+    setName(value);
   };
   const handleOnchangePassword = (value) => {
     setPassword(value);
@@ -85,8 +89,8 @@ const SignUpPage = () => {
         <WrapperContainerLeft>
           <h1>Xin chào</h1>
           <p className='tag_p'>Đăng nhập hoặc tạo tài khoản</p>
-          {/* <InputForm placeholder='linhdz' value={name} onChange={handleOnChangeName} /> */}
           <InputForm placeholder='abc123@gmail.com' value={email} onChange={handleOnChangeEmail} />
+          <InputForm placeholder='name user' value={name} onChange={handleOnChangeName} />
           {/* <InputForm placeholder='0796636720' value={phone} onChange={handleOnChangePhone} /> */}
           <div style={{ position: 'relative' }}>
             <span

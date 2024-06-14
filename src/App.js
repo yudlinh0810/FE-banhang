@@ -1,21 +1,27 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { routes } from './routes';
 import DefaultComponent from './components/DefaultComponent/DefaultComponent';
 import { isJsonString } from './utils';
 import * as UserService from './service/UserService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from './redux/slices/userSlice';
 import jwt_decode from 'jwt-decode';
+import Loading from './components/LoadingComponent/Loading';
 // import axios from 'axios';
 
-function App(props) {
+function App() {
   const dispatch = useDispatch();
+  // const [isPending, setIsPending] = useState(false);
+  const user = useSelector((state) => state.user);
+  console.log(`user`, user.state);
   useEffect(() => {
+    // setIsPending(true);
     const { decoded, storageData } = handleDecoded();
     if (decoded?.id) {
       handleGetDetailUser(decoded?.id, storageData);
     }
+    // setIsPending(false);
   }, []);
 
   const handleDecoded = () => {
@@ -51,15 +57,17 @@ function App(props) {
 
   return (
     <div>
+      {/* <Loading isPending={isPending}> */}
       <Router>
         <Routes>
           {routes.map((route) => {
             const Page = route.page;
+            const checkAuth = !route.isPrivate || user.isAdmin;
             const Layout = route.isShowHeader ? DefaultComponent : Fragment;
             return (
               <Route
                 key={route.path}
-                path={route.path}
+                path={checkAuth ? route.path : undefined}
                 element={
                   <Layout>
                     <Page />
@@ -70,6 +78,7 @@ function App(props) {
           })}
         </Routes>
       </Router>
+      {/* </Loading> */}
     </div>
   );
 }

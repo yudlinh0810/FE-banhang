@@ -7,6 +7,8 @@ import { SignInPage } from '../pages/SignInPage/SignInPage';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import ProductDetailPage from '../pages/ProductDetailPage/ProductDetailPage';
 import ProfilePage from '../pages/Profile/ProfilePage';
+import ChangePassPage from '../pages/ChangePassPage/ChangePassPage';
+import AdminHome from '../pages/AdminPages/AdminHome/AdminHome';
 
 export const routes = [
   {
@@ -50,8 +52,18 @@ export const routes = [
     page: NotFoundPage,
   },
   {
-    path: '/profile',
+    path: '/profile-user',
     page: ProfilePage,
     isShowHeader: true,
+  },
+  {
+    path: '/changePass-user',
+    page: ChangePassPage,
+  },
+  {
+    path: '/admin',
+    page: AdminHome,
+    isShowHeader: false,
+    isPrivate: true,
   },
 ];

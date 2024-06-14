@@ -2,13 +2,13 @@ import React from 'react';
 import { WrapperContent, WrapperLabelText, WrapperTextValue } from './style';
 import { Checkbox } from 'antd';
 
-const NavbarComponent = () => {
+const NavbarComponent = (props) => {
   const onChange = () => {};
   const renderContent = (type, options) => {
     switch (type) {
       case 'text':
-        return options.map((option) => {
-          return <WrapperTextValue>{option}</WrapperTextValue>;
+        return options.map((option, index) => {
+          return <WrapperTextValue key={index}>{option}</WrapperTextValue>;
         });
       case 'checkbox':
         return (
@@ -17,7 +17,11 @@ const NavbarComponent = () => {
             onChange={onChange}
           >
             {options.map((option) => {
-              return <Checkbox value={option.value}>{option.label}</Checkbox>;
+              return (
+                <Checkbox key={option.value} value={option.value}>
+                  {option.label}
+                </Checkbox>
+              );
             })}
           </Checkbox.Group>
         );
