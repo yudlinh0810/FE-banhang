@@ -9,6 +9,9 @@ import ProductDetailPage from '../pages/ProductDetailPage/ProductDetailPage';
 import ProfilePage from '../pages/Profile/ProfilePage';
 import ChangePassPage from '../pages/ChangePassPage/ChangePassPage';
 import AdminHome from '../pages/AdminPages/AdminHome/AdminHome';
+import ManageUser from '../pages/AdminPages/ManageUser/ManageUser';
+import ManageProduct from '../pages/AdminPages/ManageProduct/ManageProduct';
+import ManageInvoice from '../pages/AdminPages/ManageInvoice/ManageInvoice';
 
 export const routes = [
   {
@@ -63,6 +66,24 @@ export const routes = [
   {
     path: '/admin',
     page: AdminHome,
+    isShowHeader: false,
+    isPrivate: true,
+  },
+  {
+    path: '/manage-user',
+    page: ManageUser,
+    isShowHeader: false,
+    isPrivate: true,
+  },
+  {
+    path: '/manage-product',
+    page: ManageProduct,
+    isShowHeader: false,
+    isPrivate: true,
+  },
+  {
+    path: '/manage-invoice',
+    page: ManageInvoice,
     isShowHeader: false,
     isPrivate: true,
   },

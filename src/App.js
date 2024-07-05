@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { routes } from './routes';
 import DefaultComponent from './components/DefaultComponent/DefaultComponent';
@@ -7,8 +7,7 @@ import * as UserService from './service/UserService';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from './redux/slices/userSlice';
 import jwt_decode from 'jwt-decode';
-import Loading from './components/LoadingComponent/Loading';
-// import axios from 'axios';
+// import Loading from './components/LoadingComponent/Loading';
 
 function App() {
   const dispatch = useDispatch();
